@@ -1,0 +1,16 @@
+{
+    "name": "Uniject.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:a2cf1df8463a6e2478ce6e2e6edebcb3"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
