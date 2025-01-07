@@ -17,13 +17,97 @@ Uniject organises dependencies through a system of containers:
 - **Scene Containers**: For scene-specific dependencies
 - **GameObject Containers**: Attached to individual gameobjects, allows the creation of modular and reusable setups
 
+A single container can only have one dependency of one type. If an injection target has several options for resolving a single dependency, the priory gets the dependency that is lower in this list.
+
 ### **Bindings**
-- **Instances**: Passing one instance of a given object for injection
+At this time, bindings can be passed through mono behaviours installers and scriptable objects installers.
+
+Bind types:
+- **Instances**: Passing single instance of a given object for injection
 - **Dynamic**: Dynamically created instance of a given non-mono behaviour class, constructor arguments populate based on dependencies
 - **Transient**: Same as for the dynamic binder, with the difference of creating a new instance for each injection
 - **Factory**: Dynamic creation of game objects, allowing dependencies to be injected before unity callbacks (e.g. Awake)
 
 ## **Getting Started**
+
+Start by creating a scene container on the scene. Right click on the scene and select _’Uniject/Scene Container’_ or create an empty object and add the _'SceneContainer'_ script manually.
+
+Then make the first installer, create a new mono script inheriting from MonoInstaller:
+```cs
+using Uniject;
+
+public class FirstMonoInstaller : MonoInstaller
+{
+    public override void Install(IDependencyContextBuilder contextBuilder)
+    {
+        
+    }
+}
+```
+
+Define the class of object you want to inject:
+```cs
+public class GameManager
+{
+    private readonly string m_importantString;
+
+    public GameManager(string importantString)
+    {
+        m_importantString = importantString;
+    }
+}
+```
+
+Bind instance of an object, and provide instances manually:
+```cs
+public override void Install(IDependencyContextBuilder contextBuilder)
+{
+    GameManager gameManager = new GameManager("Hello World");
+    contextBuilder.BindInstance<GameManager>(gameManager);
+}
+```
+This bound instance will be the equivalent of the GameManager type for the scene container.
+
+A second option for such binding, may be to create the object dynamically:
+```cs
+public override void Install(IDependencyContextBuilder contextBuilder)
+{
+    contextBuilder.BindDynamic<GameManager>();
+    contextBuilder.BindInstance<string>("Dynamic Hello World");
+}
+```
+In order to populate the constructor argument, we must also bind this argument.
+
+Next we need to have somewhere to inject our dependency, let's create a class _‘Service1’_:
+```cs
+using Uniject;
+using UnityEngine;
+
+public class Service1 : MonoBehaviour
+{
+    [Inject]
+    private GameManager m_gameManagerField;
+
+    [Inject]
+    private GameManager m_gameManagerProperty { get; set; }
+
+    [Inject]
+    private void Construct(GameManager gameManager)
+    {
+        // Do whatever you want with this
+    }
+}
+```
+I have given some possible options, we can choose which method we want to inject our dependency with.
+
+The third option here, is transient binding. Each time this type is injected, a new instance of the object will be created:
+```cs
+public override void Install(IDependencyContextBuilder contextBuilder)
+{
+    contextBuilder.BindTransient<GameManager>();
+    contextBuilder.BindInstance<string>("Dynamic bind");
+}
+```
 
 ## **Credits**
 Inspired by [Zenject](https://github.com/modesttree/Zenject)
