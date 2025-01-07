@@ -28,7 +28,7 @@ Bind types:
 - **Transient**: Same as for the dynamic binder, with the difference of creating a new instance for each injection
 - **Factory**: Dynamic creation of game objects, allowing dependencies to be injected before unity callbacks (e.g. Awake)
 
-## **Hooking into Player Loop**
+### **Hooking into Player Loop**
 
 W.I.P
 
