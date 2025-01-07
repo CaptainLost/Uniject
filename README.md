@@ -28,6 +28,10 @@ Bind types:
 - **Transient**: Same as for the dynamic binder, with the difference of creating a new instance for each injection
 - **Factory**: Dynamic creation of game objects, allowing dependencies to be injected before unity callbacks (e.g. Awake)
 
+## **Hooking into Player Loop**
+
+W.I.P
+
 ## **Getting Started**
 
 Start by creating a scene container on the scene. Right click on the scene and select _’Uniject/Scene Container’_ or create an empty object and add the _'SceneContainer'_ script manually.
@@ -109,6 +113,39 @@ public override void Install(IDependencyContextBuilder contextBuilder)
     contextBuilder.BindInstance<string>("Dynamic bind");
 }
 ```
+
+## **Binder Attributes**
+
+### **Every Binder**
+<details>
+  <summary>SetTarget: Allows you to select the types for which injection will take place</summary>
+
+```cs
+public interface IGameManager
+{
+
+}
+
+public class GameManager : IGameManager
+{
+
+}
+
+public class GameInstaller : MonoInstaller
+{
+    public override void Install(IDependencyContextBuilder contextBuilder)
+    {
+        contextBuilder.BindDynamic<GameManager>()
+            .SetTarget<IGameManager, GameManager>();
+    }
+}
+```
+
+GameManager object, will be injected into IGameManager and GameManager.
+</details>
+
+> [!IMPORTANT]
+> The type to be injected must be assignable from the target type
 
 ## **Credits**
 Inspired by [Zenject](https://github.com/modesttree/Zenject)
