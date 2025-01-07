@@ -152,7 +152,11 @@ GameManager object, will be injected into IGameManager and GameManager.
   <summary>NonLazy: Allows an object to be created when it is binded and not when it is injected as is normally the case</summary>
 
 ```cs
-W.I.P
+public override void Install(IDependencyContextBuilder contextBuilder)
+{
+    contextBuilder.BindDynamic<GameManager>()
+        .NonLazy();
+}
 ```
 
 GameManager object, will be injected into IGameManager and GameManager.
