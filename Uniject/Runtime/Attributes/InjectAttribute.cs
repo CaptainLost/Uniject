@@ -2,7 +2,7 @@
 
 namespace Uniject
 {
-    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Field)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Field | AttributeTargets.Property)]
     public sealed class InjectAttribute : Attribute
     {
 
