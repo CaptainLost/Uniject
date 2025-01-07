@@ -46,7 +46,7 @@ public class FirstMonoInstaller : MonoInstaller
 ```
 Let's add our newly created installer, to a container on the scene.
 
-Define the class of object you want to inject:
+Define the class of the object we want to inject:
 ```cs
 public class GameManager
 {
