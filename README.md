@@ -32,6 +32,10 @@ Bind types:
 
 W.I.P
 
+## **Installation**
+
+W.I.P
+
 ## **Getting Started**
 
 Start by creating a scene container on the scene. Right click on the scene and select _’Uniject/Scene Container’_ or create an empty object and add the _'SceneContainer'_ script manually.
