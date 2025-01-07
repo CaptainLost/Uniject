@@ -34,6 +34,7 @@ namespace Uniject
 
             DependencyContextBuilder contextBuilder = new DependencyContextBuilder();
             InstallMonoInstallers(contextBuilder);
+            InstallScriptableObjects(contextBuilder);
 
             contextBuilder.BuildContext(Context, this);
 
