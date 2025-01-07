@@ -147,5 +147,22 @@ GameManager object, will be injected into IGameManager and GameManager.
 > [!IMPORTANT]
 > The type to be injected must be assignable from the target type
 
+### **Dynamic Binder**
+<details>
+  <summary>NonLazy: Allows an object to be created when it is binded and not when it is injected as is normally the case</summary>
+
+```cs
+W.I.P
+```
+
+GameManager object, will be injected into IGameManager and GameManager.
+</details>
+
+### **Transient Binder**
+W.I.P
+
+### **Factory Binder**
+W.I.P
+
 ## **Credits**
 Inspired by [Zenject](https://github.com/modesttree/Zenject)
