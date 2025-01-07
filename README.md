@@ -44,6 +44,7 @@ public class FirstMonoInstaller : MonoInstaller
     }
 }
 ```
+Let's add our newly created installer, to a container on the scene.
 
 Define the class of object you want to inject:
 ```cs
