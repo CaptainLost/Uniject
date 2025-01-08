@@ -35,6 +35,9 @@ It is possible for bind instances to have callbacks to player loop unity, ie:
 - **Update**
 - **Fixed Update** (planned)
 
+### **Factories**
+W.I.P
+
 ## **Installation**
 
 W.I.P
