@@ -11,6 +11,8 @@ Be aware that this is a fresh plugin and may contain bugs.
 - Methods
 - Constructors
 
+At the moment, only reference types are supported, but value types are planned.
+
 ### **Containers**
 Uniject organises dependencies through a system of containers:
 - **Project Container**: For dependencies shared by the entire project (located at ‘Resources/Project Container’)
@@ -125,6 +127,8 @@ public override void Install(IDependencyContextBuilder contextBuilder)
   <summary>SetTarget: Allows you to select the types for which injection will take place</summary>
 
 ```cs
+using Uniject;
+
 public interface IGameManager
 {
 
@@ -150,6 +154,38 @@ GameManager object, will be injected into IGameManager and GameManager.
 
 > [!IMPORTANT]
 > The type to be injected must be assignable from the target type
+
+<details>
+  <summary>RegisterCallbacks: Allows callbacks from interfaces to be registered</summary>
+
+```cs
+using Uniject;
+
+public interface IGameManager
+{
+
+}
+
+public class GameManager : IGameManager, IUpdateCallback
+{
+    public void OnUpdate()
+    {
+        // This now will be called every frame, before mono behaviour's update
+    }
+}
+
+public class GameInstaller : MonoInstaller
+{
+    public override void Install(IDependencyContextBuilder contextBuilder)
+    {
+        contextBuilder.BindDynamic<GameManager>()
+            .RegisterCallbacks();
+    }
+}
+```
+
+Each instance created will register its callback to the update.
+</details>
 
 ### **Dynamic Binder**
 <details>
