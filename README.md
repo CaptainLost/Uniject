@@ -14,7 +14,7 @@ Be aware that this is a fresh plugin and may contain bugs.
 At the moment, only reference types are supported, but value types are planned.
 
 ### **Containers**
-Uniject organises dependencies through a system of containers:
+Dependencies are organised through a container system:
 - **Project Container**: For dependencies shared by the entire project (located at ‘Resources/Project Container’)
 - **Scene Containers**: For scene-specific dependencies
 - **GameObject Containers**: Attached to individual gameobjects, allows the creation of modular and reusable setups
