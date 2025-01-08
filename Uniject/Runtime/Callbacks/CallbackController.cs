@@ -2,27 +2,38 @@
 
 namespace Uniject
 {
-    public class CallbackController
+    public static class CallbackController
     {
-        private readonly List<IUpdateCallback> m_updateCallbacks = new();
+        private static readonly List<IUpdateCallback> m_updateCallbacks = new();
 
-        public void RegisterUpdateCallback(IUpdateCallback updateCallback)
+        public static void RegisterUpdateCallback(IUpdateCallback updateCallback)
         {
             if (m_updateCallbacks.Contains(updateCallback))
-            {
-                Logging.Warn($"Trying to register a callback that already exists: {updateCallback.GetType().Name}");
                 return;
-            }
 
             m_updateCallbacks.Add(updateCallback);
         }
 
-        public void ExecuteUpdateCallbacks()
+        public static void ExecuteUpdateCallbacks()
         {
-            foreach (IUpdateCallback updateCallback in m_updateCallbacks)
+            for (int i = m_updateCallbacks.Count - 1; i >= 0; i--)
             {
+                IUpdateCallback updateCallback = m_updateCallbacks[i];
+
+                if (updateCallback == null)
+                {
+                    m_updateCallbacks.RemoveAt(i);
+
+                    continue;
+                }
+
                 updateCallback.OnUpdate();
             }
+        }
+
+        public static void Clear()
+        {
+            m_updateCallbacks.Clear();
         }
     }
 }

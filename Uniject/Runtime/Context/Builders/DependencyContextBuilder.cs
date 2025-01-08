@@ -28,6 +28,7 @@ namespace Uniject
         }
 
         public InstanceBinderBuilder BindInstance<T>(object instanceObject)
+            where T : class
         {
             Type bindType = typeof(T);
 
@@ -38,6 +39,7 @@ namespace Uniject
         }
 
         public DynamicBinderBuilder BindDynamic<T>()
+            where T : class
         {
             Type bindType = typeof(T);
 
@@ -48,6 +50,7 @@ namespace Uniject
         }
 
         public TransientBinderBuilder BindTransient<T>()
+            where T : class
         {
             Type bindType = typeof(T);
 

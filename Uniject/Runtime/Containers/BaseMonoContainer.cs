@@ -15,11 +15,6 @@ namespace Uniject
 
         public bool WasInstalled { get; private set; }
 
-        protected virtual void Update()
-        {
-            Context.CallbackController.ExecuteUpdateCallbacks();
-        }
-
         public object Resolve(Type type)
         {
             Install();

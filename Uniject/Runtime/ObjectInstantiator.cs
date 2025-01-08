@@ -8,7 +8,7 @@ namespace Uniject
     {
         public static object InstatiateObject(Type type, IResolvable resolvable)
         {
-            ConstructorInfo[] constructorsInfo = type.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            ConstructorInfo[] constructorsInfo = type.GetConstructors(Utilities.s_BindingFlags);
 
             if (constructorsInfo.Length == 0)
             {
@@ -27,6 +27,8 @@ namespace Uniject
                 ParameterInfo paramInfo = constructorParamsInfo[i];
 
                 object resolvedParam = resolvable.Resolve(paramInfo.ParameterType);
+
+                UnityEngine.Debug.Log($"Witam {resolvedParam}");
 
                 if (resolvedParams.Contains(resolvedParam)) // TODO: Test this behaviour, might cause issues
                     continue;

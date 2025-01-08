@@ -23,6 +23,10 @@ namespace Uniject
             ResolvableStack resolvableStack = ResolvableStackBuilder.BuildResolvableStackForGameObject(sourceContainer.gameObject);
 
             object instatiatedObject = ObjectInstantiator.InstatiateObject(m_instanceType, resolvableStack);
+
+            if (resolvableStack == null)
+                return null;
+
             ReflectionInjector.Inject(instatiatedObject, resolvableStack);
 
             OnInstanceCreate?.Invoke(instatiatedObject);

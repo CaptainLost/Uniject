@@ -4,6 +4,8 @@ namespace Uniject
 {
     public abstract partial class BaseBinderBuilder
     {
+        public Action<Binder> OnBinderBuild;
+
         public Type InitialType { get; private set; }
 
         protected Type[] m_targetedTypes;
@@ -21,8 +23,9 @@ namespace Uniject
                 SetTarget(InitialType);
 
             Binder buildBinder = CreateBinder(dependencyContext, sourceContainer);
-
             buildBinder.Build();
+
+            OnBinderBuild?.Invoke(buildBinder);
 
             return buildBinder;
         }
@@ -37,6 +40,29 @@ namespace Uniject
             Array.Copy(targetedTypes, 0, m_targetedTypes, 1, targetedTypes.Length);
 
             return this;
+        }
+
+        public BaseBinderBuilder RegisterCallbacks()
+        {
+            OnBinderBuild -= RegisterCallbacksOnBinder;
+            OnBinderBuild += RegisterCallbacksOnBinder;
+
+            return this;
+        }
+
+        private static void RegisterCallbacksOnBinder(Binder binder)
+        {
+            IInstanceProvider binderInstanceProvider = binder.InstanceProvider;
+
+            binderInstanceProvider.OnInstanceCreate += (instance) =>
+            {
+                IUpdateCallback updateCallback = instance as IUpdateCallback;
+
+                if (updateCallback == null)
+                    return;
+
+                CallbackController.RegisterUpdateCallback(updateCallback);
+            };
         }
     }
 }

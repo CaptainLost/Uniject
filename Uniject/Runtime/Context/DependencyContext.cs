@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 namespace Uniject
 {
     public class DependencyContext : IDependencyContext, IResolvable
     {
-        public readonly CallbackController CallbackController = new CallbackController();
-
         private readonly Dictionary<Type, Binder> m_registry = new Dictionary<Type, Binder>();
 
         public bool AddBinder(Type type, Binder contextBinder)
         {
             if (!m_registry.TryAdd(type, contextBinder))
             {
-                Debug.Log("Context already has dependecy");
+                Logging.Warn($"Failed to add binder for type {type.FullName}. The context already contains a dependency for this type, check for duplicate bindings or conflicts in your registry.");
 
                 return false;
             }
@@ -33,7 +30,7 @@ namespace Uniject
 
             if (filteredBinders.Count() > 1)
             {
-                Debug.Log("Multiplie binders for targeted types, choosing first");
+                Logging.Warn($"Multiple binders found for type {typeToResolve.FullName}. Using the first registered binder, this may lead to unexpected behavior.");
             }
 
             Binder selectedBinder = filteredBinders.First().Value;
@@ -43,7 +40,7 @@ namespace Uniject
 
             if (!typeToResolve.IsAssignableFrom(resolvedType))
             {
-                Debug.Log($"Failed to resolve, type {typeToResolve} is not assignable from other type {resolvedType}");
+                Logging.Warn($"Requested type {typeToResolve.FullName} is not assignable from resolved type {resolvedType.FullName}, check your bindings and ensure compatibility.");
 
                 return null;
             }
