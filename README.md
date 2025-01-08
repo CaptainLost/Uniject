@@ -79,6 +79,9 @@ public override void Install(IDependencyContextBuilder contextBuilder)
 ```
 This bound instance will be the equivalent of the GameManager type for the scene container.
 
+<!---
+CURRENTLY NOT WORKING, TO BE FIXED
+
 A second option for such binding, may be to create the object dynamically:
 ```cs
 public override void Install(IDependencyContextBuilder contextBuilder)
@@ -88,6 +91,7 @@ public override void Install(IDependencyContextBuilder contextBuilder)
 }
 ```
 In order to populate the constructor argument, we must also bind this argument.
+-->
 
 Next we need to have somewhere to inject our dependency, let's create a class _‘Service1’_:
 ```cs
@@ -111,6 +115,9 @@ public class Service1 : MonoBehaviour
 ```
 I have given some possible options, we can choose which method we want to inject our dependency with.
 
+<!---
+CURRENTLY NOT WORKING, TO BE FIXED
+
 The third option here, is transient binding. Each time this type is injected, a new instance of the object will be created:
 ```cs
 public override void Install(IDependencyContextBuilder contextBuilder)
@@ -119,6 +126,7 @@ public override void Install(IDependencyContextBuilder contextBuilder)
     contextBuilder.BindInstance<string>("Dynamic bind");
 }
 ```
+-->
 
 ## **Binder Attributes**
 
