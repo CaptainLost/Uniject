@@ -22,7 +22,7 @@ Uniject organises dependencies through a system of containers:
 A single container can only have one dependency of one type. If an injection target has several options for resolving a single dependency, the priory gets the dependency that is lower in this list.
 
 ### **Bindings**
-At this time, bindings can be passed through mono behaviours installers and scriptable objects installers.
+Bindings can be passed through mono behaviours installers and scriptable objects installers.
 
 Bind types:
 - **Instances**: Passing single instance of a given object for injection
