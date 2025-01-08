@@ -31,7 +31,7 @@ Bind types:
 - **Factory**: Dynamic creation of game objects, allowing dependencies to be injected before unity callbacks (e.g. Awake)
 
 ### **Hooking into Player Loop**
-It is possible for bind instances to have callbacks to player loop unity, ie:
+It is possible for bind instances to have callbacks to unity player loop, ie:
 - **Update**
 - **Fixed Update** (planned)
 
