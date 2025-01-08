@@ -97,7 +97,7 @@ public override void Install(IDependencyContextBuilder contextBuilder)
 In order to populate the constructor argument, we must also bind this argument.
 -->
 
-Next we need to have somewhere to inject our dependency, let's create a class _‘Service1’_:
+Next we need to have somewhere to inject our dependency, let's create a class _‘Service1’_ and mark targets with inject attribute:
 ```cs
 using Uniject;
 using UnityEngine;
@@ -141,12 +141,12 @@ public override void Install(IDependencyContextBuilder contextBuilder)
 ```cs
 using Uniject;
 
-public interface IGameManager
+public interface IPathFinder
 {
 
 }
 
-public class GameManager : IGameManager
+public class AStarPathFinder : IPathFinder
 {
 
 }
@@ -155,13 +155,13 @@ public class GameInstaller : MonoInstaller
 {
     public override void Install(IDependencyContextBuilder contextBuilder)
     {
-        contextBuilder.BindDynamic<GameManager>()
-            .SetTarget<IGameManager, GameManager>();
+        contextBuilder.BindDynamic<AStarPathFinder>()
+            .SetTarget<IPathFinder, AStarPathFinder>();
     }
 }
 ```
 
-GameManager object, will be injected into IGameManager and GameManager.
+AStarPathFinder object, will be injected into IPathFinder and AStarPathFinder.
 </details>
 
 > [!IMPORTANT]
