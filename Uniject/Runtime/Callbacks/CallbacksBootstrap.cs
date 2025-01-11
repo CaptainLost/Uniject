@@ -78,7 +78,7 @@ namespace Uniject
             }
 #endif
 
-            PlayerLoopUtilities.PrintPlayerLoop(ref currentPlayerLoop);
+            // PlayerLoopUtilities.PrintPlayerLoop(ref currentPlayerLoop);
         }
     }
 }

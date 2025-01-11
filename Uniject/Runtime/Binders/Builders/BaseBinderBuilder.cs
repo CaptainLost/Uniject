@@ -56,13 +56,17 @@ namespace Uniject
 
             binderInstanceProvider.OnInstanceCreate += (instance) =>
             {
-                IFixedUpdateCallback startCallback = instance as IFixedUpdateCallback;
-                if (startCallback != null)
-                    CallbackStorage<IFixedUpdateCallback>.RegisterCallback(startCallback);
+                IFixedUpdateCallback fixedUpdateCallback = instance as IFixedUpdateCallback;
+                if (fixedUpdateCallback != null)
+                    CallbackStorage<IFixedUpdateCallback>.RegisterCallback(fixedUpdateCallback);
 
                 IUpdateCallback updateCallback = instance as IUpdateCallback;
                 if (updateCallback != null)
                     CallbackStorage<IUpdateCallback>.RegisterCallback(updateCallback);
+
+                ILateUpdateCallback lateUpdateCallback = instance as ILateUpdateCallback;
+                if (lateUpdateCallback != null)
+                    CallbackStorage<ILateUpdateCallback>.RegisterCallback(lateUpdateCallback);
             };
         }
     }
