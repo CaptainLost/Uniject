@@ -27,13 +27,13 @@ namespace Uniject
             if (WasInstalled)
                 return false;
 
+            WasInstalled = true;
+
             DependencyContextBuilder contextBuilder = new DependencyContextBuilder();
             InstallMonoInstallers(contextBuilder);
             InstallScriptableObjects(contextBuilder);
 
             contextBuilder.BuildContext(Context, this);
-
-            WasInstalled = true;
 
             return true;
         }

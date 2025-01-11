@@ -1,39 +1,27 @@
-﻿using System.Collections.Generic;
-
-namespace Uniject
+﻿namespace Uniject
 {
     public static class CallbackController
     {
-        private static readonly List<IUpdateCallback> m_updateCallbacks = new();
-
-        public static void RegisterUpdateCallback(IUpdateCallback updateCallback)
-        {
-            if (m_updateCallbacks.Contains(updateCallback))
-                return;
-
-            m_updateCallbacks.Add(updateCallback);
-        }
-
         public static void ExecuteUpdateCallbacks()
         {
-            for (int i = m_updateCallbacks.Count - 1; i >= 0; i--)
-            {
-                IUpdateCallback updateCallback = m_updateCallbacks[i];
+            CallbackStorage<IUpdateCallback>.Execute(callback => callback.OnUpdate());
+        }
 
-                if (updateCallback == null)
-                {
-                    m_updateCallbacks.RemoveAt(i);
+        public static void ExecuteLateUpdateCallbacks()
+        {
+            CallbackStorage<ILateUpdateCallback>.Execute(callback => callback.OnLateUpdate());
+        }
 
-                    continue;
-                }
-
-                updateCallback.OnUpdate();
-            }
+        public static void ExecuteFixedUpdateCallbacks()
+        {
+            CallbackStorage<IFixedUpdateCallback>.Execute(callback => callback.OnFixedUpdate());
         }
 
         public static void Clear()
         {
-            m_updateCallbacks.Clear();
+            CallbackStorage<IUpdateCallback>.Clear();
+            CallbackStorage<ILateUpdateCallback>.Clear();
+            CallbackStorage<IFixedUpdateCallback>.Clear();
         }
     }
 }

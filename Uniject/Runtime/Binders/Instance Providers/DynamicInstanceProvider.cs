@@ -2,7 +2,6 @@
 
 namespace Uniject
 {
-
     public class DynamicInstanceProvider : IInstanceProvider
     {
         public Action<object> OnInstanceCreate { get; set; }
@@ -45,6 +44,8 @@ namespace Uniject
             if (instantiatedObject == null)
             {
                 Logging.Error($"Failed to instatiate object of type '{m_instanceType.Name}'");
+
+                return null;
             }
 
             ReflectionInjector.Inject(instantiatedObject, resolvableStack);

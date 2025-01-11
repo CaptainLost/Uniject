@@ -28,8 +28,6 @@ namespace Uniject
 
                 object resolvedParam = resolvable.Resolve(paramInfo.ParameterType);
 
-                UnityEngine.Debug.Log($"Witam {resolvedParam}");
-
                 if (resolvedParams.Contains(resolvedParam)) // TODO: Test this behaviour, might cause issues
                     continue;
 

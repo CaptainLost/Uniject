@@ -1,10 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using UnityEngine.LowLevel;
 
 namespace Uniject
 {
     public static class PlayerLoopUtilities
     {
+        public static bool InsertSystem<T>(ref PlayerLoopSystem targetedSystem, in PlayerLoopSystem systemToInsert, int index)
+        {
+            if (targetedSystem.type != typeof(T))
+                return HandleSubSystemLoop<T>(ref targetedSystem, systemToInsert, index);
+
+            List<PlayerLoopSystem> playerLoopSystemList = new List<PlayerLoopSystem>();
+
+            if (targetedSystem.subSystemList != null)
+                playerLoopSystemList.AddRange(targetedSystem.subSystemList);
+
+            playerLoopSystemList.Insert(index, systemToInsert);
+            targetedSystem.subSystemList = playerLoopSystemList.ToArray();
+
+            return true;
+        }
+
         public static void RemoveSystem<T>(ref PlayerLoopSystem targetedSystem, in PlayerLoopSystem systemToRemove)
         {
             if (targetedSystem.subSystemList == null)
@@ -26,31 +44,51 @@ namespace Uniject
             HandleSubSystemLoopForRemoval<T>(ref targetedSystem, systemToRemove);
         }
 
-        static void HandleSubSystemLoopForRemoval<T>(ref PlayerLoopSystem targetedSystem, PlayerLoopSystem systemToRemove)
-        {
-            if (targetedSystem.subSystemList == null)
-                return;
-
-            for (int i = 0; i < targetedSystem.subSystemList.Length; ++i)
-            {
-                RemoveSystem<T>(ref targetedSystem.subSystemList[i], systemToRemove);
-            }
-        }
-
-        public static bool InsertSystem<T>(ref PlayerLoopSystem targetedSystem, in PlayerLoopSystem systemToInsert, int index)
+        public static int GetSubsystemIndex<T>(ref PlayerLoopSystem targetedSystem)
         {
             if (targetedSystem.type != typeof(T))
-                return HandleSubSystemLoop<T>(ref targetedSystem, systemToInsert, index);
+            {
+                if (targetedSystem.subSystemList == null)
+                    return -1;
 
-            List<PlayerLoopSystem> playerLoopSystemList = new List<PlayerLoopSystem>();
+                for (int i = 0; i < targetedSystem.subSystemList.Length; ++i)
+                {
+                    if (targetedSystem.subSystemList[i].type == typeof(T))
+                        return i;
 
-            if (targetedSystem.subSystemList != null)
-                playerLoopSystemList.AddRange(targetedSystem.subSystemList);
+                    int subSystemIndex = GetSubsystemIndex<T>(ref targetedSystem.subSystemList[i]);
 
-            playerLoopSystemList.Insert(index, systemToInsert);
-            targetedSystem.subSystemList = playerLoopSystemList.ToArray();
+                    if (subSystemIndex >= 0)
+                        return subSystemIndex;
+                }
+            }
 
-            return true;
+            return -1;
+        }
+
+        public static void PrintPlayerLoop(ref PlayerLoopSystem targetedSystem)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach (PlayerLoopSystem subSystem in targetedSystem.subSystemList)
+            {
+                PrintSubsystem(subSystem, stringBuilder, 0);
+            }
+
+            UnityEngine.Debug.Log(stringBuilder.ToString());
+        }
+
+        private static void PrintSubsystem(PlayerLoopSystem targetedSystem, StringBuilder stringBuilder, int level)
+        {
+            stringBuilder.Append(' ', level * 2).AppendLine(targetedSystem.type.ToString());
+
+            if (targetedSystem.subSystemList == null || targetedSystem.subSystemList.Length == 0)
+                return;
+
+            foreach (PlayerLoopSystem subSystem in targetedSystem.subSystemList)
+            {
+                PrintSubsystem(subSystem, stringBuilder, level + 1);
+            }
         }
 
         private static bool HandleSubSystemLoop<T>(ref PlayerLoopSystem targetedSystem, in PlayerLoopSystem systemToInsert, int index)
@@ -67,6 +105,17 @@ namespace Uniject
             }
 
             return false;
+        }
+
+        private static void HandleSubSystemLoopForRemoval<T>(ref PlayerLoopSystem targetedSystem, PlayerLoopSystem systemToRemove)
+        {
+            if (targetedSystem.subSystemList == null)
+                return;
+
+            for (int i = 0; i < targetedSystem.subSystemList.Length; ++i)
+            {
+                RemoveSystem<T>(ref targetedSystem.subSystemList[i], systemToRemove);
+            }
         }
     }
 }

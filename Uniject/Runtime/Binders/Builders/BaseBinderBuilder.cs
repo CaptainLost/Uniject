@@ -4,7 +4,7 @@ namespace Uniject
 {
     public abstract partial class BaseBinderBuilder
     {
-        public Action<Binder> OnBinderBuild;
+        public Action<Binder> OnBeforeBinderBuild;
 
         public Type InitialType { get; private set; }
 
@@ -23,9 +23,9 @@ namespace Uniject
                 SetTarget(InitialType);
 
             Binder buildBinder = CreateBinder(dependencyContext, sourceContainer);
-            buildBinder.Build();
 
-            OnBinderBuild?.Invoke(buildBinder);
+            OnBeforeBinderBuild?.Invoke(buildBinder);
+            buildBinder.Build();
 
             return buildBinder;
         }
@@ -44,8 +44,8 @@ namespace Uniject
 
         public BaseBinderBuilder RegisterCallbacks()
         {
-            OnBinderBuild -= RegisterCallbacksOnBinder;
-            OnBinderBuild += RegisterCallbacksOnBinder;
+            OnBeforeBinderBuild -= RegisterCallbacksOnBinder;
+            OnBeforeBinderBuild += RegisterCallbacksOnBinder;
 
             return this;
         }
@@ -56,12 +56,13 @@ namespace Uniject
 
             binderInstanceProvider.OnInstanceCreate += (instance) =>
             {
+                IFixedUpdateCallback startCallback = instance as IFixedUpdateCallback;
+                if (startCallback != null)
+                    CallbackStorage<IFixedUpdateCallback>.RegisterCallback(startCallback);
+
                 IUpdateCallback updateCallback = instance as IUpdateCallback;
-
-                if (updateCallback == null)
-                    return;
-
-                CallbackController.RegisterUpdateCallback(updateCallback);
+                if (updateCallback != null)
+                    CallbackStorage<IUpdateCallback>.RegisterCallback(updateCallback);
             };
         }
     }
