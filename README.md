@@ -31,7 +31,7 @@ Bind types:
 - **Factory**: Dynamic creation of game objects, allowing dependencies to be injected before unity callbacks (e.g. Awake)
 
 ### **Hooking into Player Loop**
-An additional option is to register callbacks to the player loop unity when binding instances. To use this, add the selected interfaces to the definition of the bound object type and then use the _'RegisterCallbacks'_ attribute when building a relationship:
+An additional option is to register callbacks to the player loop unity when binding instances. To use this, add the selected interfaces to the definition of the bound object type and then use the _'RegisterCallbacks'_ attribute when building the bind:
 - **IUpdate**: Called before the mono behaviour update
 - **ILateUpdate**: Called before the mono behaviour late update
 - **IFixedUpdate**: called before the mono behaviour fixed update
