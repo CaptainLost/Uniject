@@ -36,7 +36,7 @@ An additional option is to register callbacks to the player loop unity when bind
 - **ILateUpdate**: Called before the mono behaviour late update
 - **IFixedUpdate**: called before the mono behaviour fixed update
 
-They are located in the space named Uniject.
+They are located in the namespace Uniject.
 
 ### **Factories**
 W.I.P
