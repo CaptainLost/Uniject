@@ -31,9 +31,12 @@ Bind types:
 - **Factory**: Dynamic creation of game objects, allowing dependencies to be injected before unity callbacks (e.g. Awake)
 
 ### **Hooking into Player Loop**
-It is possible for bind instances to have callbacks to unity player loop, ie:
-- **Update**
-- **Fixed Update** (planned)
+An additional option is to register callbacks to the player loop unity when binding instances. To use this add the selected instances to the bound object:
+- **IUpdate**: Called before the mono behaviour update
+- **ILateUpdate**: Called before the mono behaviour late update
+- **IFixedUpdate**: called before the mono behaviour fixed update
+
+They are located in the space named Uniject.
 
 ### **Factories**
 W.I.P
