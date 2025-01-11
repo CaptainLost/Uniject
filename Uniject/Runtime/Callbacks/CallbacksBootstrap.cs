@@ -68,6 +68,8 @@ namespace Uniject
                     PlayerLoopSystem currentPlayerLoop = PlayerLoop.GetCurrentPlayerLoop();
 
                     PlayerLoopUtilities.RemoveSystem<Update>(ref currentPlayerLoop, s_updateCallbacksLoopSystem);
+                    PlayerLoopUtilities.RemoveSystem<PreLateUpdate>(ref currentPlayerLoop, s_lateUpdateCallbacksLoopSystem);
+                    PlayerLoopUtilities.RemoveSystem<FixedUpdate>(ref currentPlayerLoop, s_fixedUpdateCallbacksLoopSystem);
 
                     PlayerLoop.SetPlayerLoop(currentPlayerLoop);
 
