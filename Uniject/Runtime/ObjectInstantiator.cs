@@ -24,16 +24,24 @@ namespace Uniject
 
             for (int i = 0; i < constructorParamsInfo.Length; i++)
             {
-                ParameterInfo paramInfo = constructorParamsInfo[i];
+                ParameterInfo parameterInfo = constructorParamsInfo[i];
+                Type parameterType = parameterInfo.ParameterType;
 
-                object resolvedParam = resolvable.Resolve(paramInfo.ParameterType);
+                if (parameterType.IsValueType)
+                {
+                    Logging.Error($"Unable to create object of type {type}, failed to resolve parameter of type {parameterType}. Value types are currently not supported");
+
+                    return null;
+                }
+
+                object resolvedParam = resolvable.Resolve(parameterType);
 
                 if (resolvedParams.Contains(resolvedParam)) // TODO: Test this behaviour, might cause issues
                     continue;
 
                 if (resolvedParam == null)
                 {
-                    Logging.Error($"Unable to create object of type {type}, failed to resolve parameter of type {paramInfo.ParameterType}");
+                    Logging.Error($"Unable to create object of type {type}, failed to resolve parameter of type {parameterType}");
 
                     return null;
                 }
