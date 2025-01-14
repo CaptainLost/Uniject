@@ -2,7 +2,7 @@
     "name": "Uniject.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:a2cf1df8463a6e2478ce6e2e6edebcb3"
+        "Uniject.Runtime"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
