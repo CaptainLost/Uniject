@@ -1,5 +1,5 @@
 # **Uniject: Dependency Injection Library for Unity**
-Uniject is a dependency injection library created specifically for the Unity Engine. Unity is built on an entity component system, where for such a system it is often easy to get into chaos with dependencies. API like this allows for clear dependency management while increasing the modularity of the code. If you have experience with zenject, here the binding system works on similar principles. However, the important thing is that containers work a little differently.
+Uniject is a dependency injection library created specifically for the Unity Engine. Unity is built on an entity component system, where for such a system it is often easy to get into chaos with dependencies. API like this allows for clear dependency management while increasing the modularity of the code. If you have experience with zenject, here the binding system works on similar principles. However, the important thing is that containers work a little differently. The library is fully written in C#, containing nothing but pure C# with the Unity API.
 
 Be aware that this is a fresh plugin and may contain bugs.
 
