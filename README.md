@@ -19,7 +19,7 @@ Dependencies are organised through a container system:
 - **Scene Containers**: For scene-specific dependencies
 - **GameObject Containers**: Attached to individual gameobjects, allows the creation of modular and reusable setups
 
-A single container can only have one dependency of one type. If an injection target has several options for resolving a single dependency, the priory gets the dependency that is lower in this list. Project container must be created in _‘resources’_ folder (Assets/Create/Uniject/Project Container), scene container and game object container are scripts on game objects.
+A single container can only have one dependency of one type. If an injection target has several options for resolving a single dependency, the priory gets the dependency that is lower in this list. Project container must be created in _‘resources’_ folder (Assets/Create/Uniject/Project Container), scene container and game object container are scripts on game objects. The containers are then constructed from the installers, which are placed on the containers afterwards.
 
 ### **Bindings**
 Bindings can be passed through mono behaviours installers and scriptable objects installers.
