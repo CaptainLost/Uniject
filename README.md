@@ -15,7 +15,7 @@ At the moment, only reference types are supported, but value types are planned.
 
 ### **Containers**
 Dependencies are organised through a container system:
-- **Project Container**: For dependencies shared by the entire project (located at ‘Resources/Project Container’)
+- **Project Container**: For dependencies shared by the entire project
 - **Scene Containers**: For scene-specific dependencies
 - **GameObject Containers**: Attached to individual gameobjects, allows the creation of modular and reusable setups
 
