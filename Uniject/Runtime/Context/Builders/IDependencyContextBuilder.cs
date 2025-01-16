@@ -2,7 +2,7 @@
 
 namespace Uniject
 {
-    public interface IDependencyContextBuilder
+    public partial interface IDependencyContextBuilder
     {
         bool BuildContext(IDependencyContext dependencyContext, BaseMonoContainer sourceContainer);
 

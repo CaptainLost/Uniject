@@ -64,17 +64,83 @@ namespace Uniject
             where TMono : MonoBehaviour
             where TFactory : MonoFactory<TMono>
         {
-            Type factoryType = typeof(TFactory);
+            return CreateFactoryBinderBuilder(typeof(TFactory), instantiatedPrefab);
+        }
 
-            FactoryBinderBuilder factoryBinderBuilder = new FactoryBinderBuilder(factoryType, instantiatedPrefab);
-            AddBinderBuilder(factoryBinderBuilder);
+        public FactoryBinderBuilder BindFactory<TMono, TFactory, TArg1>(TMono instantiatedPrefab)
+            where TMono : MonoBehaviour
+            where TFactory : MonoFactory<TMono>
+            where TArg1 : class
+        {
+            return CreateFactoryBinderBuilder(typeof(TFactory), instantiatedPrefab);
+        }
 
-            return factoryBinderBuilder;
+        public FactoryBinderBuilder BindFactory<TMono, TFactory, TArg1, TArg2>(TMono instantiatedPrefab)
+            where TMono : MonoBehaviour
+            where TFactory : MonoFactory<TMono>
+            where TArg1 : class
+            where TArg2 : class
+        {
+            return CreateFactoryBinderBuilder(typeof(TFactory), instantiatedPrefab);
+        }
+
+        public FactoryBinderBuilder BindFactory<TMono, TFactory, TArg1, TArg2, TArg3>(TMono instantiatedPrefab)
+            where TMono : MonoBehaviour
+            where TFactory : MonoFactory<TMono>
+            where TArg1 : class
+            where TArg2 : class
+            where TArg3 : class
+        {
+            return CreateFactoryBinderBuilder(typeof(TFactory), instantiatedPrefab);
+        }
+
+        public FactoryBinderBuilder BindFactory<TMono, TFactory, TArg1, TArg2, TArg3, TArg4>(TMono instantiatedPrefab)
+            where TMono : MonoBehaviour
+            where TFactory : MonoFactory<TMono>
+            where TArg1 : class
+            where TArg2 : class
+            where TArg3 : class
+            where TArg4 : class
+        {
+            return CreateFactoryBinderBuilder(typeof(TFactory), instantiatedPrefab);
+        }
+
+        public FactoryBinderBuilder BindFactory<TMono, TFactory, TArg1, TArg2, TArg3, TArg4, TArg5>(TMono instantiatedPrefab)
+            where TMono : MonoBehaviour
+            where TFactory : MonoFactory<TMono>
+            where TArg1 : class
+            where TArg2 : class
+            where TArg3 : class
+            where TArg4 : class
+            where TArg5 : class
+        {
+            return CreateFactoryBinderBuilder(typeof(TFactory), instantiatedPrefab);
+        }
+
+        public FactoryBinderBuilder BindFactory<TMono, TFactory, TArg1, TArg2, TArg3, TArg4, TArg5, TArg6>(TMono instantiatedPrefab)
+            where TMono : MonoBehaviour
+            where TFactory : MonoFactory<TMono>
+            where TArg1 : class
+            where TArg2 : class
+            where TArg3 : class
+            where TArg4 : class
+            where TArg5 : class
+            where TArg6 : class
+        {
+            return CreateFactoryBinderBuilder(typeof(TFactory), instantiatedPrefab);
         }
 
         private void AddBinderBuilder(BaseBinderBuilder binderBuilder)
         {
             m_binderBuilders.Add(binderBuilder);
+        }
+
+        private FactoryBinderBuilder CreateFactoryBinderBuilder(Type factoryType, object instantiatedPrefab)
+        {
+            FactoryBinderBuilder factoryBinderBuilder = new FactoryBinderBuilder(factoryType, instantiatedPrefab);
+            AddBinderBuilder(factoryBinderBuilder);
+
+            return factoryBinderBuilder;
         }
     }
 }
