@@ -69,7 +69,7 @@ namespace Uniject
 
         public FactoryBinderBuilder BindFactory<TMono, TFactory, TArg1>(TMono instantiatedPrefab)
             where TMono : MonoBehaviour
-            where TFactory : MonoFactory<TMono>
+            where TFactory : MonoFactory<TMono, TArg1>
             where TArg1 : class
         {
             return CreateFactoryBinderBuilder(typeof(TFactory), instantiatedPrefab);
@@ -77,7 +77,7 @@ namespace Uniject
 
         public FactoryBinderBuilder BindFactory<TMono, TFactory, TArg1, TArg2>(TMono instantiatedPrefab)
             where TMono : MonoBehaviour
-            where TFactory : MonoFactory<TMono>
+            where TFactory : MonoFactory<TMono, TArg1, TArg2>
             where TArg1 : class
             where TArg2 : class
         {
@@ -86,7 +86,7 @@ namespace Uniject
 
         public FactoryBinderBuilder BindFactory<TMono, TFactory, TArg1, TArg2, TArg3>(TMono instantiatedPrefab)
             where TMono : MonoBehaviour
-            where TFactory : MonoFactory<TMono>
+            where TFactory : MonoFactory<TMono, TArg1, TArg2, TArg3>
             where TArg1 : class
             where TArg2 : class
             where TArg3 : class
@@ -96,7 +96,7 @@ namespace Uniject
 
         public FactoryBinderBuilder BindFactory<TMono, TFactory, TArg1, TArg2, TArg3, TArg4>(TMono instantiatedPrefab)
             where TMono : MonoBehaviour
-            where TFactory : MonoFactory<TMono>
+            where TFactory : MonoFactory<TMono, TArg1, TArg2, TArg3, TArg4>
             where TArg1 : class
             where TArg2 : class
             where TArg3 : class
@@ -107,7 +107,7 @@ namespace Uniject
 
         public FactoryBinderBuilder BindFactory<TMono, TFactory, TArg1, TArg2, TArg3, TArg4, TArg5>(TMono instantiatedPrefab)
             where TMono : MonoBehaviour
-            where TFactory : MonoFactory<TMono>
+            where TFactory : MonoFactory<TMono, TArg1, TArg2, TArg3, TArg4, TArg5>
             where TArg1 : class
             where TArg2 : class
             where TArg3 : class
@@ -119,7 +119,7 @@ namespace Uniject
 
         public FactoryBinderBuilder BindFactory<TMono, TFactory, TArg1, TArg2, TArg3, TArg4, TArg5, TArg6>(TMono instantiatedPrefab)
             where TMono : MonoBehaviour
-            where TFactory : MonoFactory<TMono>
+            where TFactory : MonoFactory<TMono, TArg1, TArg2, TArg3, TArg4, TArg5, TArg6>
             where TArg1 : class
             where TArg2 : class
             where TArg3 : class
