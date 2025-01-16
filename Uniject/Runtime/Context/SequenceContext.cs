@@ -7,6 +7,21 @@ namespace Uniject
     {
         protected Dictionary<Type, SequenceValue> m_sequence = new Dictionary<Type, SequenceValue>();
 
+        public SequenceContext()
+        {
+
+        }
+
+        public SequenceContext(object firstValue, params object[] values)
+        {
+            Add(firstValue);
+
+            foreach (object value in values)
+            {
+                Add(value);
+            }
+        }
+
         public object Resolve(Type type)
         {
             if (m_sequence.TryGetValue(type, out SequenceValue value))

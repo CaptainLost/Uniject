@@ -8,21 +8,21 @@ namespace Uniject
 {
     public static class ReflectionInjector
     {
-        public static bool InjectIntoGameObjectAndChildren(GameObject gameObject)
+        public static bool InjectIntoGameObjectAndChildren(GameObject gameObject, IResolvable additionalResolvable = null)
         {
-            if (!InjectIntoGameObject(gameObject))
+            if (!InjectIntoGameObject(gameObject, additionalResolvable))
                 return false;
 
             foreach (Transform child in gameObject.transform)
             {
-                if (!InjectIntoGameObjectAndChildren(child.gameObject))
+                if (!InjectIntoGameObjectAndChildren(child.gameObject, additionalResolvable))
                     return false;
             }
 
             return true;
         }
 
-        public static bool InjectIntoGameObject(GameObject gameObject)
+        public static bool InjectIntoGameObject(GameObject gameObject, IResolvable additionalResolvable = null)
         {
             IEnumerable<MonoBehaviour> injectableMonoBehaviours = gameObject.GetComponents<MonoBehaviour>()
                 .Where(Utilities.IsMonoBehaviourInjectable);
@@ -30,6 +30,9 @@ namespace Uniject
             foreach (MonoBehaviour injectableMonoBehaviour in injectableMonoBehaviours)
             {
                 ResolvableStack resolvableStack = ResolvableStackBuilder.BuildResolvableStackForGameObject(gameObject);
+
+                if (additionalResolvable != null)
+                    resolvableStack.PushFront(additionalResolvable);
 
                 if (!Inject(injectableMonoBehaviour, resolvableStack))
                     return false;
