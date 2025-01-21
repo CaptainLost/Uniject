@@ -39,7 +39,95 @@ An additional option is to register callbacks to the player loop unity when bind
 They are located in the namespace Uniject.
 
 ### **Factories**
-W.I.P
+In the case where you need to inject dependencies dynamically into unity game object, that is, after the scene has started, the method for doing so is the factory. Factories support up to 6 passed arguments.
+
+## **Binder Attributes**
+
+### **Every Binder**
+<details>
+  <summary>SetTarget: Allows you to select the types for which injection will take place</summary>
+
+```cs
+using Uniject;
+
+public interface IPathFinder
+{
+
+}
+
+public class AStarPathFinder : IPathFinder
+{
+
+}
+
+public class GameInstaller : MonoInstaller
+{
+    public override void Install(IDependencyContextBuilder contextBuilder)
+    {
+        contextBuilder.BindDynamic<AStarPathFinder>()
+            .SetTarget<IPathFinder, AStarPathFinder>();
+    }
+}
+```
+
+AStarPathFinder object, will be injected into IPathFinder and AStarPathFinder.
+</details>
+
+> [!IMPORTANT]
+> The type to be injected must be assignable from the target type
+
+<details>
+  <summary>RegisterCallbacks: Allows callbacks from interfaces to be registered</summary>
+
+```cs
+using Uniject;
+
+public interface IGameManager
+{
+
+}
+
+public class GameManager : IGameManager, IUpdateCallback
+{
+    public void OnUpdate()
+    {
+        // This now will be called every frame, before mono behaviour's update
+    }
+}
+
+public class GameInstaller : MonoInstaller
+{
+    public override void Install(IDependencyContextBuilder contextBuilder)
+    {
+        contextBuilder.BindDynamic<GameManager>()
+            .RegisterCallbacks();
+    }
+}
+```
+
+Each instance created will register its callback to the update.
+</details>
+
+### **Dynamic Binder**
+<details>
+  <summary>NonLazy: Allows an object to be created when it is binded and not when it is injected as is normally the case</summary>
+
+```cs
+public override void Install(IDependencyContextBuilder contextBuilder)
+{
+    contextBuilder.BindDynamic<GameManager>()
+        .NonLazy();
+}
+```
+
+GameManager object, will be injected into IGameManager and GameManager.
+</details>
+
+### **Transient Binder**
+Apart from those of the base binding, there are currently no others.
+
+### **Factory Binder**
+Apart from those of the base binding, there are currently no others.
 
 ## **Installation**
 
@@ -134,94 +222,6 @@ public override void Install(IDependencyContextBuilder contextBuilder)
 }
 ```
 -->
-
-## **Binder Attributes**
-
-### **Every Binder**
-<details>
-  <summary>SetTarget: Allows you to select the types for which injection will take place</summary>
-
-```cs
-using Uniject;
-
-public interface IPathFinder
-{
-
-}
-
-public class AStarPathFinder : IPathFinder
-{
-
-}
-
-public class GameInstaller : MonoInstaller
-{
-    public override void Install(IDependencyContextBuilder contextBuilder)
-    {
-        contextBuilder.BindDynamic<AStarPathFinder>()
-            .SetTarget<IPathFinder, AStarPathFinder>();
-    }
-}
-```
-
-AStarPathFinder object, will be injected into IPathFinder and AStarPathFinder.
-</details>
-
-> [!IMPORTANT]
-> The type to be injected must be assignable from the target type
-
-<details>
-  <summary>RegisterCallbacks: Allows callbacks from interfaces to be registered</summary>
-
-```cs
-using Uniject;
-
-public interface IGameManager
-{
-
-}
-
-public class GameManager : IGameManager, IUpdateCallback
-{
-    public void OnUpdate()
-    {
-        // This now will be called every frame, before mono behaviour's update
-    }
-}
-
-public class GameInstaller : MonoInstaller
-{
-    public override void Install(IDependencyContextBuilder contextBuilder)
-    {
-        contextBuilder.BindDynamic<GameManager>()
-            .RegisterCallbacks();
-    }
-}
-```
-
-Each instance created will register its callback to the update.
-</details>
-
-### **Dynamic Binder**
-<details>
-  <summary>NonLazy: Allows an object to be created when it is binded and not when it is injected as is normally the case</summary>
-
-```cs
-public override void Install(IDependencyContextBuilder contextBuilder)
-{
-    contextBuilder.BindDynamic<GameManager>()
-        .NonLazy();
-}
-```
-
-GameManager object, will be injected into IGameManager and GameManager.
-</details>
-
-### **Transient Binder**
-W.I.P
-
-### **Factory Binder**
-W.I.P
 
 ## **Credits**
 Inspired by [Zenject](https://github.com/modesttree/Zenject)
